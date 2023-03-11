@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'playlist_screen.dart';
+import 'SettingsPage.dart';
+import 'SearchPage.dart';
+import 'ProfilePage.dart';
+import 'PlayScreen.dart';
 
-
-
+import 'AlbumListPage.dart';
 void main() {
   runApp(MyApp());
 }
@@ -35,13 +38,18 @@ class MyHomePage extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PlaylistScreen()),
+                MaterialPageRoute(builder: (context) => SearchPage()),
               );
             },
           ),
           IconButton(
             icon: Icon(Icons.settings),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsPage()),
+              );
+            },
           ),
         ],
       ),
@@ -70,8 +78,16 @@ class MyHomePage extends StatelessWidget {
                   title: Text('Song Title'),
                   subtitle: Text('Artist Name'),
                   trailing: Text('3:12'),
+                  onTap: () {
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PlayScreen()),
+                    );
+                  },
                 );
               },
+
             ),
           ),
         ],
@@ -79,6 +95,31 @@ class MyHomePage extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: 0,
+        onTap: (int index) {
+          switch(index) {
+            case 0:
+            // Navigate to home screen
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AlbumListPage()),
+              );
+              break;
+            case 2:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PlaylistScreen()),
+              );
+              break;
+            case 3:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePage()),
+              );
+              break;
+          }
+        },
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -97,7 +138,6 @@ class MyHomePage extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
-
           ),
         ],
       ),
