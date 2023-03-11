@@ -41,7 +41,12 @@ class MyHomePage extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(Icons.settings),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PlaylistScreen()),
+              );
+            },
           ),
         ],
       ),
@@ -79,6 +84,31 @@ class MyHomePage extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: 0,
+        onTap: (int index) {
+          switch(index) {
+            case 0:
+            // Navigate to home screen
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PlaylistScreen()),
+              );
+              break;
+            case 2:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PlaylistScreen()),
+              );
+              break;
+            case 3:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PlaylistScreen()),
+              );
+              break;
+          }
+        },
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -97,7 +127,6 @@ class MyHomePage extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
-
           ),
         ],
       ),
