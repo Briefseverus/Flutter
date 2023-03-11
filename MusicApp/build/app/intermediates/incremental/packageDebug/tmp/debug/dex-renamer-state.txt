@@ -1,0 +1,4 @@
+#Sat Mar 11 15:07:44 GMT+07:00 2023
+base.0=C\:\\Users\\Admin\\StudioProjects\\MusicApp\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
