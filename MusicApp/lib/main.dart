@@ -5,13 +5,17 @@ import 'package:provider/provider.dart';
 import 'AlbumListPage.dart';
 import 'PlayScreen.dart';
 import 'ProfilePage.dart';
+import 'Routes.dart';
 import 'SearchPage.dart';
 import 'SettingsPage.dart';
 import 'ThemeNotifier.dart';
 import 'playlist_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-void main() {
+void main()async  {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(
+
     ChangeNotifierProvider<ThemeNotifier>(
       create: (_) => ThemeNotifier(),
       child: MyApp(),
@@ -29,7 +33,10 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData.dark(),
       themeMode: themeNotifier.themeMode,
       home: MyHomePage(),
+      initialRoute: '/',
+      routes: routes,
     );
+
   }
 }
 

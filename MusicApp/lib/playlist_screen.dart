@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -82,37 +81,3 @@ class _PlaylistScreenState extends State<playlist_sceen> {
     );
   }
 }
-=======
-import 'package:flutter/material.dart';
-import 'PlayScreen.dart';
-class PlaylistScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Playlist'),
-      ),
-      body: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            leading: Icon(Icons.music_note),
-            title: Text('Song ${index + 1}'),
-            subtitle: Text('Artist name'),
-            trailing: Icon(Icons.more_vert),
-            onTap: () {
-
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => PlayScreen()),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-}
-
-
->>>>>>> 0ea812d7b37dd3d7e3c66d37462e188b2f5247d4

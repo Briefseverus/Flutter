@@ -80,7 +80,7 @@ class SettingsPage extends StatelessWidget {
               title: Text('Sign Out'),
               trailing: Icon(Icons.chevron_right),
               onTap: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => LoginScreen()),
                 );

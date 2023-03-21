@@ -3,14 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'routes.dart';
-class LoginScreen extends StatefulWidget {
+
+class RegisterScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
-
-
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late String _email, _password;
@@ -21,8 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
-        automaticallyImplyLeading: false
+        title: Text('Register'),
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: Padding(
@@ -36,8 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   validator: (input) {
                     if (input == null || input.isEmpty) {
                       return 'Please enter your email';
-                    } else if (input.length < 6) {
-                      return 'Password should be at least 6 characters';
                     }
                     return null;
                   },
@@ -63,23 +60,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 _isLoading
                     ? CircularProgressIndicator()
                     : ElevatedButton(
-                  onPressed: signIn,
-                  child: Text('Login'),
+                  onPressed: register,
+                  child: Text('Register'),
                 ),
                 SizedBox(height: 20.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Don't have an account? "),
+                    Text("Already have an account? "),
                     InkWell(
                       child: Text(
-                        'Register',
+                        'Login',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       onTap: () {
-                        Navigator.pushNamed(context, '/resgiterPage');
+                        Navigator.pushReplacementNamed(context, '/loginPage');
                       },
                     ),
                   ],
@@ -91,40 +88,41 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-  Future<void> signIn() async {
+
+  Future<void> register() async {
     final formState = _formKey.currentState;
     if (formState != null && formState.validate()) {
-      formState?.save();
+      formState.save();
       try {
         setState(() {
           _isLoading = true;
         });
-        UserCredential user = await _auth.signInWithEmailAndPassword(
+        UserCredential user = await _auth.createUserWithEmailAndPassword(
             email: _email, password: _password);
         setState(() {
           _isLoading = false;
         });
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/loginPage');
       } on FirebaseAuthException catch (e) {
         setState(() {
           _isLoading = false;
         });
-        if (e.code == 'user-not-found') {
+        if (e.code == 'weak-password') {
           ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('No user found with that email')));
-        } else if (e.code == 'wrong-password') {
+              SnackBar(content: Text('The password provided is too weak')));
+        } else if (e.code == 'email-already-in-use') {
           ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Wrong password entered')));
+              SnackBar(content: Text('An account already exists for this email')));
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error occurred while signing in')));
+              SnackBar(content: Text('Error occurred while registering')));
         }
       } on PlatformException catch (e) {
         setState(() {
           _isLoading = false;
         });
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error occurred while signing in')));
+            SnackBar(content: Text('Error occurred while registering')));
         print(e.message);
       }
     }
